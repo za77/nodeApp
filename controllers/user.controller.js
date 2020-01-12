@@ -17,7 +17,10 @@ exports.create = function(req,res){
 
 exports.get = function(req,res){
      //query with mongoose
-     var query = User.find({ }).select('name email role');
+     if(req.query.id){  obj = User.findById(req.query.id);
+     }else{ obj = User.find({ });  }
+
+     var query = obj.select('name email role');
     // selecting the `name` and `occupation` fields
      return query.exec(function(err,list){
          if(err){
@@ -26,4 +29,15 @@ exports.get = function(req,res){
              res.send({list:list});
          }
      });
+}
+exports.delete = function(req,res){
+    if(req.query.id){  obj = User.findByIdAndDelete(req.query.id);
+    }else{ return res.send({status:'no records found', code : 403 })  }
+    return obj.exec(function(err,list){
+        if(err){
+            return next(err);
+        }else{
+            res.send({status:'record removed',code : 200});
+        }
+    });
 }
