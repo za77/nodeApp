@@ -12,4 +12,4 @@ let ShopSchema = new Schema({
 // }
 
 //Export this model
-module.exports = mongoose.model('Book',BookSchema);
+module.exports = mongoose.model('Book',ShopSchema);

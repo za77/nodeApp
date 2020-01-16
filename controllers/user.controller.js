@@ -1,12 +1,34 @@
 const User = require('./../model/user.model');
+const jwt = require('jsonwebtoken');
+const fs = require('fs');
+const bcrypt = require('bcrypt');
+var path = require('path')
 
-exports.create = function(req,res){
-    let user = new User({
+
+exports.create = function(req,res) {
+    let password = req.body.password;
+    let obj = {
         name : req.body.name,
         email:req.body.email,
-        password:req.body.password,
-        role:req.body.role
+        role:req.body.role,
+        token : '',
+        password:''
+    };
+    
+
+    //Private Token
+    let privateKey = fs.readFileSync(path.resolve('key/private.pem'), 'utf8');
+    let token = jwt.sign({ "name": "stuff" }, privateKey, { algorithm: 'HS256'});
+    obj.token = token;
+
+    // hash functions checker
+    const saltRounds = 10;
+    bcrypt.hash(password, saltRounds, function(err, hash) {
+    obj.password  = hash;
+        
     });
+    
+    let user = new User(obj);
     user.save(function(err){
         if(err){
             return next(err);
@@ -40,4 +62,12 @@ exports.delete = function(req,res){
             res.send({status:'record removed',code : 200});
         }
     });
+}
+exports.login = function(req,res){
+    name = req.body.name;
+    password = req.body.password;
+    
+    //success then update password 
+    let privateKey = fs.readFileSync('./key/private.pem', 'utf8');
+    let token = jwt.sign({ "body": "stuff" }, privateKey, { algorithm: 'HS256'});
 }
