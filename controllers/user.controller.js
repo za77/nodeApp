@@ -14,8 +14,6 @@ exports.create = function(req,res) {
         token : '',
         password:''
     };
-    
-
     //Private Token
     let privateKey = fs.readFileSync(path.resolve('key/private.pem'), 'utf8');
     let token = jwt.sign({ "name": "stuff" }, privateKey, { algorithm: 'HS256'});
@@ -37,6 +35,7 @@ exports.create = function(req,res) {
     });
 }
 
+
 exports.get = function(req,res){
      //query with mongoose
      if(req.query.id){  obj = User.findById(req.query.id);
@@ -52,6 +51,7 @@ exports.get = function(req,res){
          }
      });
 }
+
 exports.delete = function(req,res){
     if(req.query.id){  obj = User.findByIdAndDelete(req.query.id);
     }else{ return res.send({status:'no records found', code : 403 })  }
@@ -63,11 +63,10 @@ exports.delete = function(req,res){
         }
     });
 }
+
 exports.login = function(req,res){
     name = req.body.name;
     password = req.body.password;
-    
-    //success then update password 
     let privateKey = fs.readFileSync('./key/private.pem', 'utf8');
     let token = jwt.sign({ "body": "stuff" }, privateKey, { algorithm: 'HS256'});
 }
