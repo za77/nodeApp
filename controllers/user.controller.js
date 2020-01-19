@@ -4,6 +4,11 @@ const fs = require('fs');
 const bcrypt = require('bcrypt');
 var path = require('path')
 
+/** 
+ * 1.Right login & Jwt token generate 
+ * 2.On login return jwt token
+ * 3.Send that key to Header section and get response
+ */
 
 exports.create = function(req,res) {
     let password = req.body.password;
@@ -63,10 +68,31 @@ exports.delete = function(req,res){
         }
     });
 }
-
+ 
 exports.login = function(req,res){
+    var hash;
     name = req.body.name;
     password = req.body.password;
-    let privateKey = fs.readFileSync('./key/private.pem', 'utf8');
-    let token = jwt.sign({ "body": "stuff" }, privateKey, { algorithm: 'HS256'});
+    qry = User.findOne({ email: name });
+    data = qry.exec(function(err,result){
+       
+    });
+    res.send({list:data});  
+
+    // status = bcrypt.compare(password, hash, function(err, status) {
+    //     return status;
+    //     });
+    // res.send({status:status,password:password,hash:hash,list:list});
+    
+    // if(status){
+    //     //update JWT token key
+    //     let privateKey = fs.readFileSync('./key/private.pem', 'utf8');
+    //     let token = jwt.sign({ "body": "stuff" }, privateKey, { algorithm: 'HS256'});    
+    //     res.send({status:'login success'});
+
+    // }
+    // else{
+    //     res.send({err : 'Login error'});
+    // }
+    
 }
