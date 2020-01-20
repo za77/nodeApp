@@ -69,16 +69,21 @@ exports.delete = function(req,res){
     });
 }
  
-exports.login = function(req,res){
+exports.login =  function(req,res){
+    /**
+     * Nodejs is asynchronous program us it will not run code step by step it will go next step without waiting response of previous code 
+     * To solve this callback hell situation  we can use async , wait method or promise method or async waterfall library
+     */
     var hash;
     name = req.body.name;
+    var user ;
     password = req.body.password;
-    qry = User.findOne({ email: name });
-    data = qry.exec(function(err,result){
-       
-    });
-    res.send({list:data});  
-
+    qry =  User.findOne({ email: name });
+    // await qry.exec(function(err, result) {  // <- this is the Promise interface.
+    //     user = result;
+    //     console.log(result);
+    //      });
+    // console.log(user,'im ');
     // status = bcrypt.compare(password, hash, function(err, status) {
     //     return status;
     //     });
