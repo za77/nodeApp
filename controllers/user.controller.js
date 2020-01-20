@@ -73,6 +73,7 @@ exports.login =  function(req,res){
     /**
      * Nodejs is asynchronous program us it will not run code step by step it will go next step without waiting response of previous code 
      * To solve this callback hell situation  we can use async , wait method or promise method or async waterfall library
+     * Before Node version 7.6, the callbacks were the only official way provided by Node to run one function after another.
      */
     var hash;
     name = req.body.name;
