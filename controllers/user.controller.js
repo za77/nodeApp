@@ -79,7 +79,40 @@ exports.login =  function(req,res){
     name = req.body.name;
     var user ;
     password = req.body.password;
-    qry =  User.findOne({ email: name });
+    qryFindUser =  User.findOne({ email: name });
+    user = qryFindUser.then(function(data){
+        return data
+    });
+
+    user.then(function(data){
+        //check 
+        console.log(data);
+        if(data){
+            status = bcrypt.compare(password, data.password, function(err, status) {
+                if(!status){
+                    res.send({status:'password incorrect',code:401,err:status})
+                }else{
+                    let privateKey = fs.readFileSync('./key/private.pem', 'utf8');
+                    let token = jwt.sign({'name':data.name,'email':data.email,'role':data.role}, privateKey, { algorithm: 'HS256'});    
+                    data.token = token;
+                    data.save(function(err, record) {
+                        if (err) {
+                          console.log(err);
+                          }else{
+                          
+                        };
+                          res.send({status:'login success',code:200,res:record});
+                        })     
+                }
+            })
+           
+        }else{
+            res.send({status:'no record found',code:401});
+            return ;
+
+        }
+    })
+
     // await qry.exec(function(err, result) {  // <- this is the Promise interface.
     //     user = result;
     //     console.log(result);

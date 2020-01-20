@@ -92,8 +92,11 @@ const product = require('./routes/product.route');
 const user = require('./routes/user.route');
 const shop = require('./routes/shop.route');
 
-app.use('/products', product);
+//this controller not need middleware access
 app.use('/user', user);
+//after use isAutenticate all controller under the one middleware
+app.use(isAuthenticated);
+app.use('/products', product);
 app.use('/shop', shop);
 
 app.listen(port, () => {

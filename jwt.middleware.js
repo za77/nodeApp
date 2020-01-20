@@ -14,7 +14,8 @@ let checkToken = (req, res, next) => {
       if (err) {
         return res.json({
           success: false,
-          message: 'Token is not valid'
+          message: 'Token is not valid',
+          code:401
         });
       } else {
         req.decoded = decoded;
@@ -24,7 +25,8 @@ let checkToken = (req, res, next) => {
   } else {
     return res.json({
       success: false,
-      message: 'Auth token is not supplied'
+      message: 'Auth token is not supplied',
+      code:401
     });
   }
 };
