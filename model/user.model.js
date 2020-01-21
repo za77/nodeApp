@@ -13,20 +13,11 @@ let UserSchema = new Schema({
    
 // }
 
-//Export this model
-module.exports = mongoose.model('User',UserSchema);
-// exports.getUserById = function(req){
-//      //query with mongoose
-//      if(req.query.id){  obj = User.findById(req.query.id);
-//      }else{ obj = User.find({ });  }
+table = mongoose.model('User',UserSchema);
+module.exports = table;
+module.exports.findOneByReq = function(condition,select){
+    console.log('its working fineOneByReq',table);
+}
+module.exports.findByReq = function(condition,select){
 
-//      var query = obj.select('name email role');
-//     // selecting the `name` and `occupation` fields
-//      return query.exec(function(err,list){
-//          if(err){
-//              return next(err);
-//          }else{
-//              return list;
-//          }
-//      });
-// }
+}

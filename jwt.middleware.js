@@ -1,7 +1,7 @@
 
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
-
+const user = require('./model/user.model');
 module.exports = function (req, res, next) {
   if (typeof req.headers.authorization !== "undefined") {
       // retrieve the authorization header and parse out the

@@ -9,6 +9,9 @@ let port = 9000;
 
 // Set up mongoose connection
 
+/** The module.exports or exports is a special object which is included in every JS file in the Node.js application by default. 
+ * module is a variable that represents current module and exports is an object that will be exposed as a module.
+ *  So, whatever you assign to module.exports or exports, will be exposed as a module.  */
 let dev_db_url = 'mongodb+srv://adminer:adminer@cluster0-alure.mongodb.net/nosql';
 let mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose.connect(mongoDB,{useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true });

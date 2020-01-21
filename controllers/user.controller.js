@@ -75,6 +75,7 @@ exports.login =  function(req,res){
      * To solve this callback hell situation  we can use async , wait method or promise method or async waterfall library
      * Before Node version 7.6, the callbacks were the only official way provided by Node to run one function after another.
      */
+    User.findOneByReq();
     var hash;
     name = req.body.name;
     var user ;
