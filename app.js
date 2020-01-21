@@ -20,45 +20,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 
-function isAuthenticated(req, res, next) {
-    if (typeof req.headers.authorization !== "undefined") {
-        // retrieve the authorization header and parse out the
-        // JWT using the split function
-        let token = req.headers.authorization.split(" ")[1];
-        console.log(token);
-        let privateKey = fs.readFileSync('./key/private.pem', 'utf8');
-        // Here we validate that the JSON Web Token is valid and has been 
-        // created using the same private pass phrase
-        jwt.verify(token, privateKey, { algorithm: "HS256" }, (err, user) => {
-            
-            // if there has been an error...
-            //console.log(err);
-            if (err) {  
-                // shut them out!
-                res.status(500).json({ error: "Not Authorized" });
-                throw new Error("Not Authorized");
-            }
-            // if the JWT is valid, allow them to hit
-            // the intended endpoint
-            return next();
-        });
-    } else {
-        // No authorization header exists on the incoming
-        // request, return not authorized and throw a new error 
-        res.status(500).json({ error: "Not Authorized" });
-        throw new Error("Not Authorized");
-    }
-}
+let  isAuthenticated = require('./jwt.middleware');
 
 app.get('/secret', isAuthenticated, (req, res) => {
     res.json({ "message" : "THIS IS SUPER SECRET, DO NOT SHARE!" })
-})
+});
 
 app.get('/jwt', (req, res) => {
     let privateKey = fs.readFileSync('./key/private.pem', 'utf8');
     let token = jwt.sign({ "body": "stuff" }, privateKey, { algorithm: 'HS256'});
     res.send(token);
-})
+});
 
 app.get('/password', (req, res) => {
    var password = req.query.password;
@@ -66,8 +38,7 @@ app.get('/password', (req, res) => {
    bcrypt.hash(password, saltRounds, function(err, hash) {
        res.send({hash:hash});
      });
-})
-
+});
 
 app.post('/check-hash' ,function(req,res) {
     hash = req.body.hash;
@@ -76,7 +47,7 @@ app.post('/check-hash' ,function(req,res) {
     bcrypt.compare(password, hash, function(err, status) {
     res.send({status : status});
     });
-})
+});
 
 
 
