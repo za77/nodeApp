@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 let ShopSchema = new Schema({
     name : {type : String, required : true , max :100 },
     location : {type:String , required:true},
-    created_date: {type:String , required:true}
+    created_date: {type:String }
 });
 
 // UserSchema.getFirstData = function(){
@@ -12,4 +12,4 @@ let ShopSchema = new Schema({
 // }
 
 //Export this model
-module.exports = mongoose.model('Book',ShopSchema);
+module.exports = mongoose.model('Shop',ShopSchema);

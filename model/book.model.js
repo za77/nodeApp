@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 let BookSchema = new Schema({
     isbn : {type : String, required : true , max :100 },
-    poster : {type:String , required:true},
+    poster : {type:String   },
     name : {type:String , required:true},
     description : {type:String , required:true},
     author : {type:String , required:true},
@@ -11,9 +11,5 @@ let BookSchema = new Schema({
     added_by: {type:String , required:true}
 });
 
-// UserSchema.getFirstData = function(){
-   
-// }
 
-//Export this model
 module.exports = mongoose.model('Book',BookSchema);

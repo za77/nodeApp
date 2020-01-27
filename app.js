@@ -5,7 +5,13 @@ const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const app = express();
 const bcrypt = require('bcrypt');
+var cors = require('cors')
 let port = 9000;
+
+
+
+
+
 
 // Set up mongoose connection
 
@@ -19,6 +25,7 @@ mongoose.Promise = global.Promise;
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
@@ -62,9 +69,12 @@ app.post('/check-hash' ,function(req,res) {
  * U => update
  * D => Delete
  */
+
 const product = require('./routes/product.route'); 
 const user = require('./routes/user.route');
 const shop = require('./routes/shop.route');
+const book = require('./routes/book.route');
+const author = require('./routes/author.route');
 
 //this controller not need middleware access
 app.use('/user', user);
@@ -72,6 +82,8 @@ app.use('/user', user);
 app.use(isAuthenticated);
 app.use('/products', product);
 app.use('/shop', shop);
+app.use('/book', book);
+app.use('/author', author);
 
 app.listen(port, () => {
     console.log('Server is up and running on port numner ' + port);

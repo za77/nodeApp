@@ -1,7 +1,7 @@
 const Shop = require('../model/shop.model');
 //Simple controller version
 
-exports.create = function(req,res) {
+exports.create = function(req,res,next) {
     console.log('create function called');
     let jsonBody = req.body;
     let shop = new Shop(jsonBody);
@@ -9,7 +9,7 @@ exports.create = function(req,res) {
         if (err) {
             return next(err);
         }
-        res.send('Product Created successfully')
+        res.send({res:'Product Created successfully',code:200});
     });
 }
 exports.get = function(req,res){

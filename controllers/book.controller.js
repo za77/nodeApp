@@ -1,21 +1,18 @@
 const Book = require('../model/book.model');
-//Simple controller version
-exports.test = function(req,res){
-    res.send('Greeting from test conroller !!!');
-}
+
+
+
 exports.create = function(req,res) {
-    console.log('create function called');
     let jsonBody = req.body;
-    let book = new Product(jsonBody);
+    let book = new Book(jsonBody);
     book.save(function (err) {
         if (err) {
             return next(err);
         }
-        res.send('Product Created successfully')
+        res.send({res:'Book Created successfully',code:200});
     });
 }
 exports.get = function(req,res){
-    console.log('get product list');
     Book.find({}, function(err, list) {
         if(err){
             return next(err);

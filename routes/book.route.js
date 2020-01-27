@@ -12,6 +12,6 @@ const controller = require('../controllers/book.controller');
 
 // a simple test url to check that all of our files are communicating correctly.
 router.get('/get', controller.get);
-router.post('/create', controller.create);
+router.put('/create', controller.create);
 
 module.exports = router;

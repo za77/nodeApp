@@ -77,10 +77,10 @@ exports.login =  function(req,res){
      */
     User.findOneByReq();
     var hash;
-    name = req.body.name;
+    email = req.body.email;
     var user ;
     password = req.body.password;
-    qryFindUser =  User.findOne({ email: name });
+    qryFindUser =  User.findOne({ email: email });
     user = qryFindUser.then(function(data){
         return data
     });
